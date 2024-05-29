@@ -17,7 +17,7 @@ model User {
   created_at    DateTime
   isAdmin       Boolean
   group         Group?
-  member        Member?
+  member        Member[]
   posts         Post[]
 }
 
@@ -48,7 +48,7 @@ model Member {
   id         String   @id @default(uuid())
   category   String
   created_at DateTime
-  userId     String   @unique
+  userId     String   
   groupId    String
   group      Group    @relation(fields: [groupId], references: [id])
   user       User     @relation(fields: [userId], references: [id])
