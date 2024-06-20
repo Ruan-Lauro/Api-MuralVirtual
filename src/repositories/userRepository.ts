@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { IUserRepository } from "../interfaces/userInterface";
 import { User } from "../models/User";
 
+
 const prisma = new PrismaClient();
 
 export class UserRepository implements IUserRepository {

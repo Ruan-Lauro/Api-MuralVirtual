@@ -40,6 +40,20 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/emailUser/:email", async (req: Request, res: Response)=>{
+  try{
+    const {email} = req.params;
+    const { statusCode, body } = await new UserService(
+      repositoryUser
+    ).emailEnv(email);
+
+    res.status(statusCode).json(body);
+
+  }catch (error) {
+    res.status(500).json({ error: error });
+  };
+});
+
 router.post("/", async (req: Request, res: Response) => {
   try {
     const data = req.body;

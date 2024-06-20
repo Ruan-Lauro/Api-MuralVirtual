@@ -42,7 +42,6 @@ export class MemberService implements IMemberService {
   async addMemberToMural(userId: string, code: string): Promise<HttpResponse<Member>> {
     try {
       const [groupId, muralId] = code.split("!")
-
       const { statusCode, body: existGroup } = await new GroupService(this._groupRepository).getGroupById(groupId);
 
       if(statusCode !== 200) return {
