@@ -10,6 +10,7 @@ import { UserService } from "../services/userService";
 
 // Middleware
 import { CustomRequest, validateToken } from "../middlewares/validateToken";
+import { Email } from "../models/Email";
 
 const router = Router();
 
@@ -53,6 +54,31 @@ router.post("/emailUser/:email", async (req: Request, res: Response)=>{
     res.status(500).json({ error: error });
   };
 });
+
+router.post("/feedback/", async (req: Request, res: Response) => {
+  try{
+    const data = req.body;
+    const requiredFields: (keyof Email)[] = [
+      "email",
+      "text",
+      "name"
+    ]
+
+    for(const field of requiredFields){
+      if (data[field] === null || data[field] === undefined || data[field]?.toString().trim() === "") {
+        return res.status(400).json(`The field ${field} is required.`);
+      }
+    }
+
+    const { statusCode, body } = await new UserService(
+      repositoryUser
+    ).Feedback(data.email, data.text, data.name);
+
+    res.status(statusCode).json(body);
+  }catch (error) {
+    res.status(500).json({ error: error });
+  };
+})
 
 router.post("/", async (req: Request, res: Response) => {
   try {

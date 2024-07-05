@@ -30,7 +30,7 @@ router.get("/generatecode/:id", async (req: Request, res: Response) => {
 })
 
 router.post("/", async (req: Request, res: Response) => {
-  const data: Pick<Mural, "name" | "category" | "groupId" |"imgMural"> = req.body;
+  const data: Pick<Mural, "name" | "category" | "groupId" |"imgMural"|"isPrivate"> = req.body;
 
 const requiredFields: (keyof Pick<Mural, "name" | "category" | "groupId" | "imgMural">)[] = ["name", "category", "groupId", "imgMural"]
   for(const field of requiredFields) {

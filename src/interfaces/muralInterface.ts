@@ -5,7 +5,7 @@ export interface IMuralRepository {
   getAllMurals: () => Promise<Mural[]>;
   getMuralById: (muralId: number) => Promise<Mural | null>;
   getMuralsByGroupId: (groupId: string) => Promise<Mural[]>;
-  createMural: ({ name, category, groupId, imgMural }: Pick<Mural, "name" | "category" | "groupId" | "imgMural">) => Promise<Mural>;
+  createMural: ({ name, category, groupId, imgMural, isPrivate }: Pick<Mural, "name" | "category" | "groupId" | "imgMural" | "isPrivate">) => Promise<Mural>;
   updateMural: ({ name, category, imgMural }: Mural, id: number) => Promise<Mural>;
   removeMural: (muralId: number) => Promise<Mural>;
 }

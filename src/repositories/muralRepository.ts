@@ -36,7 +36,7 @@ export class MuralRepository implements IMuralRepository {
     }
   }
 
-  async createMural({ name, category, groupId, imgMural }: Pick<Mural, "name" | "category" | "groupId" | "imgMural">): Promise<Mural> {
+  async createMural({ name, category, groupId, imgMural, isPrivate}: Pick<Mural, "name" | "category" | "groupId" | "imgMural" | "isPrivate">): Promise<Mural> {
     try {
       return await prisma.mural.create({
         data: {
@@ -45,6 +45,7 @@ export class MuralRepository implements IMuralRepository {
           imgMural,
           groupId,
           created_at: new Date(),
+          isPrivate,
         },
       });
     } catch (error) {

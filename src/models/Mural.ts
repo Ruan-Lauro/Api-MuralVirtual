@@ -4,5 +4,6 @@ export interface Mural {
   imgMural: string;
   groupCode: number;
   created_at: Date;
-  groupId: string; 
+  groupId: string;
+  isPrivate: boolean; 
 }
