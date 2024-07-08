@@ -66,7 +66,7 @@ class UserRepository {
             throw new Error(`error: ${error}`);
         }
     }
-    async updateUser(id, { name, username, password, profile_image }) {
+    async updateUser(id, { name, username, password, profile_image, email }) {
         return await prisma.user.update({
             where: {
                 id: id,
@@ -75,7 +75,8 @@ class UserRepository {
                 name,
                 username,
                 password,
-                profile_image
+                profile_image,
+                email
             }
         });
     }

@@ -19,9 +19,10 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: error });
     }
 });
-router.get("/:id", async (req, res) => {
+router.get("/mural/:id", async (req, res) => {
     const { id } = req.params;
-    const { statusCode, body } = await new postServices_1.PostService(repositoryPost).getPostByMuralId(parseInt(id));
+    const valueId = parseInt(id);
+    const { statusCode, body } = await new postServices_1.PostService(repositoryPost).getPostByMuralId(valueId);
     res.status(statusCode).json(body);
 });
 router.post("/", async (req, res) => {
@@ -35,7 +36,7 @@ router.post("/", async (req, res) => {
     const { statusCode, body } = await new postServices_1.PostService(repositoryPost).addPost(data);
     res.status(statusCode).json(body);
 });
-router.put("/mural/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const data = req.body;
     const { statusCode, body } = await new postServices_1.PostService(repositoryPost).updatePost(id, data);

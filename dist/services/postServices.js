@@ -48,15 +48,15 @@ class PostService {
     }
     async getPostByMuralId(muralId) {
         try {
-            const posts = await this.postRepository.getPostByMuralId(muralId);
-            if (!posts || posts.length <= 0)
+            const murals = await this.postRepository.getPostByMuralId(muralId);
+            if (!murals || murals.length <= 0)
                 return {
                     statusCode: 400,
                     body: "Posts not found."
                 };
             return {
                 statusCode: 200,
-                body: posts
+                body: murals
             };
         }
         catch (error) {

@@ -93,14 +93,13 @@ class MuralService {
                     statusCode: 404,
                     body: "Mural not found."
                 };
-            const murals = await this.muralRepository.getMuralsByGroupId(data.groupId);
-            for (const unit of murals) {
-                if (unit.category === data.category.toLocaleLowerCase())
-                    return {
-                        statusCode: 400,
-                        body: "Category already registered."
-                    };
-            }
+            // const murals = await this.muralRepository.getMuralsByGroupId(data.groupId);
+            // for(const unit of murals) {
+            //   if(unit.category === data.category.toLocaleLowerCase()) return {
+            //     statusCode: 400,
+            //     body: "Category already registered."
+            //   }
+            // }
             const fields = ["name", "category"];
             for (const field of fields) {
                 if (!data[field]) {

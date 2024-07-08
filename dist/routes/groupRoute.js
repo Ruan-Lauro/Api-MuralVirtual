@@ -39,7 +39,7 @@ router.put("/:id", async (req, res) => {
             return res.status(400).json(`The field ${prop} is required.`);
         }
     }
-    const { statusCode, body } = await new groupService_1.GroupService(repositoryGroup).updateGroup(group.name, group.imgGroup, id);
+    const { statusCode, body } = await new groupService_1.GroupService(repositoryGroup).updateGroup(group.name, id, group.imgGroup);
     res.status(statusCode).json(body);
 });
 router.delete("/:id", async (req, res) => {

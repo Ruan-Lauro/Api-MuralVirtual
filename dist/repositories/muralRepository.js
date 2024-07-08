@@ -36,7 +36,7 @@ class MuralRepository {
             throw new Error(`${error}`);
         }
     }
-    async createMural({ name, category, groupId, imgMural }) {
+    async createMural({ name, category, groupId, imgMural, isPrivate }) {
         try {
             return await prisma.mural.create({
                 data: {
@@ -45,6 +45,7 @@ class MuralRepository {
                     imgMural,
                     groupId,
                     created_at: new Date(),
+                    isPrivate,
                 },
             });
         }
@@ -52,7 +53,7 @@ class MuralRepository {
             throw new Error(`${error}`);
         }
     }
-    async updateMural({ name, category, imgMural }, id) {
+    async updateMural({ name, imgMural }, id) {
         try {
             return await prisma.mural.update({
                 where: {
@@ -60,7 +61,6 @@ class MuralRepository {
                 },
                 data: {
                     name,
-                    category: category,
                     imgMural
                 }
             });

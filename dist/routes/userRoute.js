@@ -27,6 +27,38 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: error });
     }
 });
+router.post("/emailUser/:email", async (req, res) => {
+    try {
+        const { email } = req.params;
+        const { statusCode, body } = await new userService_1.UserService(repositoryUser).emailEnv(email);
+        res.status(statusCode).json(body);
+    }
+    catch (error) {
+        res.status(500).json({ error: error });
+    }
+    ;
+});
+router.post("/feedback/", async (req, res) => {
+    try {
+        const data = req.body;
+        const requiredFields = [
+            "email",
+            "text",
+            "name"
+        ];
+        for (const field of requiredFields) {
+            if (data[field] === null || data[field] === undefined || data[field]?.toString().trim() === "") {
+                return res.status(400).json(`The field ${field} is required.`);
+            }
+        }
+        const { statusCode, body } = await new userService_1.UserService(repositoryUser).Feedback(data.email, data.text, data.name);
+        res.status(statusCode).json(body);
+    }
+    catch (error) {
+        res.status(500).json({ error: error });
+    }
+    ;
+});
 router.post("/", async (req, res) => {
     try {
         const data = req.body;
