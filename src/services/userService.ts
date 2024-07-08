@@ -241,6 +241,7 @@ export class UserService implements IUserService {
         };
 
       // Hash password
+      //New
       data.password = await hashPass(data.password);
       data.username = data.username.toLowerCase();
 
