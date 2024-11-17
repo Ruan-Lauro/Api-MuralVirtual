@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  name          String
-  username      String   @unique
-  email         String   @unique
-  password      String
-  profile_image String
-  created_at    DateTime @default(now())
-  isAdmin       Boolean
-  group         Group?   
-  groupId       String?
-  member        Member[]
-  posts         Post[]
+  id                String              @id @default(uuid())
+  name              String
+  username          String              @unique
+  email             String              @unique
+  password          String
+  profile_image     String
+  created_at        DateTime            @default(now())
+  isAdmin           Boolean
+  group             Group?
+  groupId           String?
+  member            Member[]
+  posts             Post[]
+  NotificationToken NotificationToken[]
 }
 
 model Group {
@@ -29,7 +30,7 @@ model Group {
   imgGroup   String
   groupCode  Int      @unique @default(autoincrement())
   userId     String   @unique
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   members    Member[]
   murais     Mural[]
 }
@@ -41,7 +42,7 @@ model Mural {
   created_at DateTime @default(now())
   imgMural   String
   groupId    String
-  isPrivate  Boolean  
+  isPrivate  Boolean
   group      Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
   posts      Post[]
 }
@@ -67,4 +68,10 @@ model Post {
   mural      Mural    @relation(fields: [muralId], references: [id], onDelete: Cascade)
 }
 
-
+model NotificationToken {
+  id        String   @id @default(uuid())
+  token     String
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}

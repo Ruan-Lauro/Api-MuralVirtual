@@ -44,6 +44,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 router.post("/emailUser/:email", async (req: Request, res: Response)=>{
   try{
     const {email} = req.params;
+    console.log(email)
     const { statusCode, body } = await new UserService(
       repositoryUser
     ).emailEnv(email);
