@@ -94,7 +94,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
 
 
 
-const sendPushNotification = async (expoPushToken: string, message: string) => {
+const sendPushNotification = async (expoPushToken: string, message: string, data: string[]) => {
   if (!expoPushToken || !expoPushToken.startsWith('ExponentPushToken')) {
     console.error('Invalid Expo Push Token:', expoPushToken);
     return;
@@ -103,9 +103,8 @@ const sendPushNotification = async (expoPushToken: string, message: string) => {
   const payload = {
     to: expoPushToken,
     sound: 'default',
-    title: 'Nova postagem no grupo!',
+    title: `${data[0]} publicou no(a) ${data[1]}`,
     body: message,
-    data: { someData: 'goes here' },
   };
 
   try {
@@ -133,7 +132,7 @@ const sendPushNotification = async (expoPushToken: string, message: string) => {
 
 
 router.post('/send-notification', async (req, res) => {
-  const { groupId, message, userId } = req.body;
+  const { groupId, message, userId, data} = req.body;
 
   const { body } = await new NotificationService(repositoryNotification).getAllNotifications();
   const { body: bodyM } = await new MemberService(repositoryMember).getAllMembers();
@@ -146,19 +145,20 @@ router.post('/send-notification', async (req, res) => {
       const userLG = bodyU.filter(user => groupL.some(member => member.userId === user.id));
       const userL = bodyU.filter(user => memberL.some(member => member.userId === user.id));
 
-      const filteredUserL = userL.filter(user => user.id !== userId);
+      const filteredUserL = userL;
       const combinedUsers = [
           ...filteredUserL,
-          ...userLG.filter(user => !filteredUserL.some(u => u.id === user.id))
+          ...userLG,
       ];
 
 
       const usersToNotify = combinedUsers.filter(user => user.id !== userId);
+      //
       console.log(usersToNotify)
       console.log(userId)
       const notifications = body.filter(token =>
-          usersToNotify.some(user => user.id === token.userId && user.id !== userId)
-      ).map(token => sendPushNotification(token.token, message));
+          usersToNotify.some(user => user.id === token.userId)
+      ).map(token => sendPushNotification(token.token, message, data));
 
       await Promise.all(notifications);
       res.status(200).json({ message: 'Notificações enviadas' });
