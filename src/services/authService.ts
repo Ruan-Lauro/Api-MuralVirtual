@@ -26,6 +26,7 @@ export class AuthService implements IAuthService {
   async login(email: string, password: string):
    Promise<HttpResponse<Omit<User, "password">>> {
     try {
+      console.log('Entramos aqui')
       const user = await this.userRepository.getUserByEmail(email);
 
       if(!user) return {
