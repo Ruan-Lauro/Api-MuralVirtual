@@ -43,7 +43,7 @@ export class AuthService implements IAuthService {
       const { password: currentPass, ...currentWithoutPassword } = current!;
       currentPass;
       const token = generateToken(user.id)
-
+      console.log("final do service")
       return {
         statusCode: 200,
         body: currentWithoutPassword,

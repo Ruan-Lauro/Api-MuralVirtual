@@ -31,7 +31,7 @@ router.post("/login", async (req: Request, res: Response) => {
       }
     }
     console.log('Entrou aqui também')
-    const repositoryUser = await new UserRepository();
+    const repositoryUser = new UserRepository();
     const { statusCode, body, cookies } = await new AuthService(repositoryUser).login(
       user.email,
       user.password

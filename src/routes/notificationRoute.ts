@@ -50,7 +50,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-  
+  console.log("POST ROUTER: NOTIFICATION")
     const data = req.body;
    
     const requiredFields: (keyof Notification)[] = [
