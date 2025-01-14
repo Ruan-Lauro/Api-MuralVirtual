@@ -96,10 +96,11 @@ router.delete("/:id", async (req: Request, res: Response) => {
 
 const sendPushNotification = async (expoPushToken: string, message: string, data: string[]) => {
   if (!expoPushToken || !expoPushToken.startsWith('ExponentPushToken')) {
+    console.log("Deu erro no primeiro");
     console.error('Invalid Expo Push Token:', expoPushToken);
     return;
   }
-
+  console.log("Passei do primeiro");
   const payload = {
     to: expoPushToken,
     sound: 'default',
@@ -116,7 +117,7 @@ const sendPushNotification = async (expoPushToken: string, message: string, data
       },
       body: JSON.stringify(payload),
     });
-
+    console.log(response);
     if (!response.ok) {
       const error = await response.json();
       console.error('Error sending push notification:', error);
@@ -159,8 +160,8 @@ router.post('/send-notification', async (req, res) => {
       const notifications = body.filter(token =>
           usersToNotify.some(user => user.id === token.userId)
       ).map(token => sendPushNotification(token.token, message, data));
-
       await Promise.all(notifications);
+      console.log("Passei do último");
       res.status(200).json({ message: 'Notificações enviadas' });
   }
 });

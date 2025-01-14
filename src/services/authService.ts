@@ -26,7 +26,7 @@ export class AuthService implements IAuthService {
   async login(email: string, password: string):
    Promise<HttpResponse<Omit<User, "password">>> {
     try {
-      console.log('Entramos aqui')
+    
       const user = await this.userRepository.getUserByEmail(email);
 
       if(!user) return {
@@ -44,7 +44,7 @@ export class AuthService implements IAuthService {
       const { password: currentPass, ...currentWithoutPassword } = current!;
       currentPass;
       const token = generateToken(user.id)
-      console.log("final do service")
+     
       return {
         statusCode: 200,
         body: currentWithoutPassword,

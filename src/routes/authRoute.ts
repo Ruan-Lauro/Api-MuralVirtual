@@ -17,20 +17,20 @@ const repositoryUser = new UserRepository();
 
 router.post("/login", async (req: Request, res: Response) => {
   try {
-    console.log('Entrou')
+  
     const user: Pick<User, "email" | "password"> = req.body;
 
     const requiredFields: (keyof Pick<User, "email" | "password">)[] = [
       "email",
       "password",
     ];
-    console.log('Entrou aqui')
+  
     for (const field of requiredFields) {
       if (!user[field] || user[field].toString().trim() === "") {
         return res.status(400).json(`The field ${field} is required.`);
       }
     }
-    console.log('Entrou aqui também')
+   
     const repositoryUser = new UserRepository();
     const { statusCode, body, cookies } = await new AuthService(repositoryUser).login(
       user.email,
