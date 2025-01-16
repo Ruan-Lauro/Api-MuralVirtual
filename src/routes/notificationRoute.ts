@@ -101,6 +101,7 @@ const sendPushNotification = async (expoPushToken: string, message: string, data
     return;
   }
   console.log("Passei do primeiro");
+  console.log(expoPushToken);
   const payload = {
     to: expoPushToken,
     sound: 'default',
